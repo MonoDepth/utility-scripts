@@ -5,7 +5,7 @@
 # to a remote host.
 # assumes an ssh key has been added for the remote so no
 # password is needed for ssh
-# last updated 2022-01-18
+# last updated 2022-01-26
 #----------------------------------------------------------
 
 ### ENVIRONMENT SETUP ###
@@ -86,7 +86,9 @@ cd "./${BACKUP_RUNNER_NAME}_tmp"
   post_message false "Failed to upload backup!" & cleanup_and_exit 1
 }
 
+BACKUP_SIZE=$(ssh $REMOTEHOST "(ls -lh ${TARLOCATION}${TARFILE} | awk '{print \$5}')")
+
 # show the user the result
-post_message true "Backup created"
+post_message true "Backup created\nBackup Size: $BACKUP_SIZE"
 
 cleanup_and_exit 0
